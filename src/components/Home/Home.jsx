@@ -1,5 +1,5 @@
 import React from 'react';
-import Gadgets from '../Gadgets/Gadgets';
+import git init from '../Gadgets/Gadgets';
 import { Helmet } from 'react-helmet';
 
 const Home = () => {

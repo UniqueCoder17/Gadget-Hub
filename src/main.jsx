@@ -12,42 +12,49 @@ import Dashboard from './components/Dashboard/Dashboard';
 import Statistics from './components/Statistics/Statistics';
 import GadgetDetail from './components/GadgetDetail/GadgetDetail';
 import Profile from './components/Profile/Profile';
+import Login from './components/Login/Login';
+
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Root></Root>,
-    errorElement: <ErrorPage></ErrorPage>,
+    element: <Root />,
+    errorElement: <ErrorPage />,
     children: [
       {
-        path: '/',
-        element: <Home></Home>,
+        path: "/",
+        element: <Home />,
       },
       {
-        path: 'gadgets/:product_id',
-        element: <GadgetDetail></GadgetDetail>,
-        loader: () => fetch('/gadgetsData.json')
+        path: "/gadgets/:product_id",
+        element: <GadgetDetail />,
+        loader: () => fetch("/gadgetsData.json"),
       },
       {
-        path: 'statistics',
-        element: <Statistics></Statistics>,
+        path: "/statistics",
+        element: <Statistics />,
       },
       {
-        path: 'profile',
-        element: <Profile></Profile>,
-        loader: () => fetch('/profilesData.json')
+        path: "/profile",
+        element: <Profile />,
+        loader: () => fetch("/profilesData.json"),
       },
       {
-        path: 'dashboard',
-        element: <Dashboard></Dashboard>,
-        loader: () => fetch('/gadgetsData.json')
-      }
-    ]
+        path: "/dashboard",
+        element: <Dashboard />,
+        loader: () => fetch("/gadgetsData.json"),
+      },
+      {
+        path: "/Login",
+        element: <Login />,
+        loader: () => fetch("/gadgetsData.json"),
+      },
+    ],
   },
 ]);
 
-createRoot(document.getElementById('root')).render(
+createRoot(document.getElementById("root")).render(
   <StrictMode>
     <RouterProvider router={router} />
-  </StrictMode>,
-)
+  </StrictMode>
+);

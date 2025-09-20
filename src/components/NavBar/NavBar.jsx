@@ -18,6 +18,7 @@ const NavBar = () => {
                         <li><NavLink to="statistics">Statistics</NavLink></li>
                         <li><NavLink to="dashboard">Dashboard</NavLink></li>
                         <li><NavLink to ="profile">Profile</NavLink></li>
+                        <li><NavLink to ="Login">Login</NavLink></li>
                     </ul>
                 </div>
                 <a className="btn btn-ghost text-xl">Gadget Heaven</a>
