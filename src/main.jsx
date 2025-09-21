@@ -46,8 +46,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/Login",
-        element: <Login />,
-        loader: () => fetch("/gadgetsData.json"),
+        element: <Login></Login>,
       },
     ],
   },

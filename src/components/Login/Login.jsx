@@ -1,10 +1,27 @@
-import { useEffect, useState } from "react";
-import { auth, signInWithGoogle, logOut } from "../firebase/firebase";
-import { onAuthStateChanged } from "firebase/auth";
+import React, { useEffect, useState } from "react";
+import { signInWithPopup, signOut, onAuthStateChanged } from "firebase/auth";
+import { auth, provider } from "../firebase/firebase.int";
 
 const Login = () => {
   const [user, setUser] = useState(null);
 
+  // 🔹 Google Sign In
+  const handleGoogleSignIn = async () => {
+    try {
+      const result = await signInWithPopup(auth, provider);
+      setUser(result.user);
+    } catch (error) {
+      console.error("Login error:", error.message);
+    }
+  };
+
+  // 🔹 Logout
+  const handleLogout = async () => {
+    await signOut(auth);
+    setUser(null);
+  };
+
+  // 🔹 User state listener
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
@@ -12,32 +29,28 @@ const Login = () => {
     return () => unsubscribe();
   }, []);
 
-  const handleGoogleLogin = () => {
-    signInWithGoogle().catch((err) => console.error(err));
-  };
-
-  const handleLogout = () => {
-    logOut().catch((err) => console.error(err));
-  };
-
   return (
-    <div className="text-center mt-10">
+    <div className="flex justify-center items-center h-screen flex-col">
       {user ? (
-        <div>
-          <h2>Welcome, {user.displayName}</h2>
-          <img src={user.photoURL} alt="profile" className="w-16 rounded-full mx-auto" />
-          <p>Email: {user.email}</p>
+        <div className="text-center">
+          <img
+            src={user.photoURL}
+            alt="User"
+            className="w-16 h-16 rounded-full mx-auto mb-2"
+          />
+          <h2 className="text-xl font-bold">{user.displayName}</h2>
+          <p className="text-gray-600">{user.email}</p>
           <button
             onClick={handleLogout}
-            className="bg-red-500 text-white px-4 py-2 rounded mt-4"
+            className="mt-4 px-4 py-2 bg-red-500 text-white rounded"
           >
             Logout
           </button>
         </div>
       ) : (
         <button
-          onClick={handleGoogleLogin}
-          className="bg-blue-500 text-white px-4 py-2 rounded"
+          onClick={handleGoogleSignIn}
+          className="px-6 py-2 bg-purple-600 text-white rounded hover:bg-purple-700"
         >
           Sign in with Google
         </button>
