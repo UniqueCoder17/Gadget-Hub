@@ -1,3 +1,83 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+/* Animated Login Background */
+
+.login-bg {
+  background: linear-gradient(-45deg,
+      #7c3aed,
+      #9333ea,
+      #4f46e5,
+      #2563eb);
+  background-size: 400% 400%;
+  animation: gradientMove 10s ease infinite;
+}
+
+@keyframes gradientMove {
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+
+/* Floating Blobs */
+
+.login-bg {
+  position: relative;
+  overflow: hidden;
+}
+
+.login-bg::before,
+.login-bg::after {
+  content: "";
+  position: absolute;
+  width: 350px;
+  height: 350px;
+  border-radius: 50%;
+  filter: blur(120px);
+  opacity: .35;
+}
+
+.login-bg::before {
+  background: #ff00ff;
+  top: -120px;
+  left: -120px;
+  animation: float1 8s ease-in-out infinite alternate;
+}
+
+.login-bg::after {
+  background: #00ffff;
+  bottom: -120px;
+  right: -120px;
+  animation: float2 10s ease-in-out infinite alternate;
+}
+
+@keyframes float1 {
+  from {
+    transform: translate(0, 0);
+  }
+
+  to {
+    transform: translate(120px, 80px);
+  }
+}
+
+@keyframes float2 {
+  from {
+    transform: translate(0, 0);
+  }
+
+  to {
+    transform: translate(-120px, -80px);
+  }
+}
