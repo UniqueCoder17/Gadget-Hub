@@ -7,7 +7,7 @@ import {
   RouterProvider,
   Navigate,
 } from "react-router-dom";
-
+import Success from "./components/Success/Success";
 import Root from "./components/Root/Root";
 import ErrorPage from "./components/ErrorPage/ErrorPage";
 import Home from "./components/Home/Home";
@@ -17,6 +17,10 @@ import GadgetDetail from "./components/GadgetDetail/GadgetDetail";
 import Profile from "./components/Profile/Profile";
 import Login from "./components/Login/Login";
 import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute";
+import Checkout from "./components/Checkout/Checkout";
+import Payment from "./components/Payment/Payment";
+import OrderHistory from "./components/OrderHistory/OrderHistory";
+
 
 const router = createBrowserRouter([
   // Login
@@ -76,6 +80,35 @@ const router = createBrowserRouter([
           </ProtectedRoute>
         ),
         loader: () => fetch("/profilesData.json"),
+      },
+      {
+        path: "/checkout",
+        element: <ProtectedRoute><Checkout /></ProtectedRoute>
+      },
+      {
+        path: "/payment",
+        loader: () => fetch("/gadgetsData.json"),
+        element: (
+          <ProtectedRoute>
+            <Payment />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "/success",
+        element: (
+          <ProtectedRoute>
+            <Success />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "/orders",
+        element: (
+          <ProtectedRoute>
+            <OrderHistory />
+          </ProtectedRoute>
+        ),
       },
       {
         path: "gadgets/:product_id",

@@ -20,13 +20,13 @@ const About = () => {
       </Helmet>
 
       {/* Hero Section */}
-      <div className="bg-[#9538E2] text-white py-20">
+      <div className="bg-gradient-to-b from-[#8a2cd6] to-gray-100 text-white py-20">
         <div className="max-w-6xl mx-auto px-5 text-center">
           <h1 className="text-5xl font-bold mb-5">
             Welcome to Gadget Heaven
           </h1>
 
-          <p className="text-lg text-gray-200 max-w-3xl mx-auto">
+          <p className="text-lg text-gray-800 max-w-3xl mx-auto">
             Gadget Heaven is one of the most trusted online gadget stores in
             Bangladesh. We provide premium quality smartphones, laptops,
             smartwatches and accessories with fast delivery and secure payment.

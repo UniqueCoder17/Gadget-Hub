@@ -1,11 +1,19 @@
 import React, { useEffect, useState } from 'react';
 import { useLoaderData } from 'react-router-dom';
-import { getStoredCartList, getStoredWishList, addTOStoredCartList } from '../../utility/addToDb';
-import { GrValidate } from "react-icons/gr";
+import {
+    getStoredCartList,
+    getStoredWishList,
+    addTOStoredCartList,
+    removeStoredCartList,
+    removeStoredWishList
+} from "../../utility/addToDb";
 import { TiDeleteOutline } from "react-icons/ti";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Helmet } from 'react-helmet';
+import { useNavigate } from "react-router-dom";
+
+
 
 const Dashboard = () => {
     const [cartList, setCartList] = useState([]);
@@ -13,6 +21,7 @@ const Dashboard = () => {
     const [view, setView] = useState('cart');
     const [totalCost, setTotalCost] = useState(0);
     const allGadgets = useLoaderData();
+    const navigate = useNavigate();
 
     useEffect(() => {
         const updateCartList = () => {
@@ -39,14 +48,34 @@ const Dashboard = () => {
     }, [cartList, wishList, view]);
 
     const handleDelete = (id) => {
-        const gadget = (view === 'cart' ? cartList : wishList).find(gadget => gadget.product_id === id);
-        if (view === 'cart') {
-            const updatedCartList = cartList.filter(gadget => gadget.product_id !== id);
-            setCartList(updatedCartList);
+
+        const gadget = (view === "cart" ? cartList : wishList).find(
+            gadget => gadget.product_id === id
+        );
+
+        if (view === "cart") {
+
+            removeStoredCartList(id);
+
+            const updated = cartList.filter(
+                gadget => gadget.product_id !== id
+            );
+
+            setCartList(updated);
+
             toast.warning(`${gadget.product_title} removed from cart`);
-        } else if (view === 'wishlist') {
-            const updatedWishList = wishList.filter(gadget => gadget.product_id !== id);
-            setWishList(updatedWishList);
+        }
+
+        else {
+
+            removeStoredWishList(id);
+
+            const updated = wishList.filter(
+                gadget => gadget.product_id !== id
+            );
+
+            setWishList(updated);
+
             toast.warning(`${gadget.product_title} removed from wishlist`);
         }
     };
@@ -67,20 +96,13 @@ const Dashboard = () => {
     };
 
     const handlePurchase = () => {
-        if (totalCost > 0 && view === 'cart') {
-            const modal = document.getElementById('my_modal_1');
-            modal.showModal();
+        if (view === "cart" && cartList.length > 0) {
+            navigate("/checkout");
         } else {
-            toast.error('Please add items to purchase.');
+            toast.error("Please add product to cart.");
         }
     };
 
-    const closeModal = () => {
-        const modal = document.getElementById('my_modal_1');
-        setTotalCost(0);
-        setCartList([]);
-        modal.close();
-    };
 
     return (
         <div>
@@ -154,21 +176,6 @@ const Dashboard = () => {
                     </div>
                 </div>
             </div>
-
-            {/* Purchase Modal */}
-            <dialog id="my_modal_1" className="modal">
-                <div className="modal-box space-y-4">
-                    <p><GrValidate className='w-12 h-12 text-[#3EB655] mx-auto' /></p>
-                    <h3 className="font-bold text-2xl text-center">Payment Successfully!</h3>
-                    <div>
-                        <p className="py-4 text-center">Thanks for purchasing.</p>
-                        <p className='text-center'>Total: ${totalCost}</p>
-                    </div>
-                    <div className="modal-action">
-                        <button onClick={closeModal} className="btn bg-[#9538E2]">Close</button>
-                    </div>
-                </div>
-            </dialog>
         </div>
     );
 };
