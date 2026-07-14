@@ -1,7 +1,7 @@
 # Gadget Heaven
 
 ### Live Website Link
-[Visit Gadget Heaven](https://flourishing-meringue-0cb97b.netlify.app/)
+[[Visit Gadget Heaven](https://flourishing-meringue-0cb97b.netlify.app/)](http://localhost:5173/login)
 
 ### Requirement Document
 [View Requirement Document](https://github.com/programming-hero-web-course-4/b10a8-gadget-heaven-UniqueCoder17)
