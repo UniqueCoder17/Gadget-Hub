@@ -60,7 +60,12 @@ const OrderHistory = () => {
             <div className="bg-white rounded-xl p-5 mt-5 text-black">
 
               <div className="flex justify-between py-1">
-                <span>Items</span>
+                <span>Products</span>
+                <span>{order.productsCount}</span>
+              </div>
+
+              <div className="flex justify-between py-1">
+                <span>Total Quantity</span>
                 <span>{order.items}</span>
               </div>
 
@@ -119,14 +124,41 @@ const OrderHistory = () => {
                         <p className="text-gray-500">
                           {product.category}
                         </p>
-
+                        {
+                          product.stock === 0 ? (
+                            <p className="text-red-500 font-bold">
+                              ❌ Out Of Stock
+                            </p>
+                          ) : (
+                            <p className="text-green-600 font-semibold">
+                              Stock : {product.stock}
+                            </p>
+                          )
+                        }
                       </div>
 
                     </div>
 
-                    <h2 className="text-2xl font-bold text-[#9538E2]">
-                      ${product.price}
-                    </h2>
+                    <div className="text-right">
+
+                      <p className="text-gray-500">
+                        Qty :
+                        <span className="font-bold ml-1">
+                          {product.quantity}
+                        </span>
+                      </p>
+
+                      <p className="text-[#9538E2] font-bold">
+                        Price :
+                        ${product.price.toFixed(2)}
+                      </p>
+
+                      <p className="text-green-600 font-bold">
+                        Total :
+                        ${(product.price * product.quantity).toFixed(2)}
+                      </p>
+
+                    </div>
 
                   </div>
 

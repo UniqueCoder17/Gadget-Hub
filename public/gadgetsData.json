@@ -5,6 +5,8 @@
     "product_image": "https://i.ibb.co.com/fDj7Fgf/Wireless-Headphones.jpg",
     "category": "Accessories",
     "price": 59.99,
+    "stock": 27,
+    "sold": 0,
     "description": "High-quality wireless headphones with noise cancellation.",
     "Specification": [
       "Battery Life: 20 hours",
@@ -21,6 +23,8 @@
     "product_image": "https://i.ibb.co.com/F6QcjH0/Logitech-G-PRO.jpg",
     "category": "Accessories",
     "price": 159,
+    "stock": 15,
+    "sold": 0,
     "description": "High-quality wireless headphones with noise cancellation.",
     "Specification": [
       "Battery Life: 20 hours",
@@ -37,6 +41,8 @@
     "product_image": "https://i.ibb.co.com/FYmbmyv/Smartphone.jpg",
     "category": "Phones",
     "price": 299.99,
+    "stock": 15,
+    "sold": 0,
     "description": "Latest model smartphone with a stunning display.",
     "Specification": [
       "Screen Size: 6.5 inches",
@@ -53,6 +59,8 @@
     "product_image": "https://i.ibb.co.com/zxrsvYh/Gaming-Laptop.webp",
     "category": "Laptops",
     "price": 999.99,
+    "stock": 15,
+    "sold": 0,
     "description": "High-performance gaming laptop with a powerful GPU.",
     "Specification": [
       "Processor: Intel i7",
@@ -69,6 +77,8 @@
     "product_image": "https://i.ibb.co.com/khWF7Fh/Business-Laptop.jpg",
     "category": "Laptops",
     "price": 799.99,
+    "stock": 15,
+    "sold": 0,
     "description": "Lightweight laptop for professionals with a long battery life.",
     "Specification": [
       "Processor: Intel i5",
@@ -85,6 +95,8 @@
     "product_image": "https://i.ibb.co.com/pxVVRzQ/apple-Smart-Watch.jpg",
     "category": "Smart Watches",
     "price": 399.99,
+    "stock": 15,
+    "sold": 0,
     "description": "Luxury smart watch with a classic design.",
     "Specification": [
       "Battery Life: 10 days",
@@ -101,6 +113,8 @@
     "product_image": "https://i.ibb.co.com/zbq7fGP/Asus-x21-ultrabook.jpg",
     "category": "Laptops",
     "price": 1299.99,
+    "stock": 15,
+    "sold": 0,
     "description": "Sleek ultrabook with a vibrant display and lightweight design.",
     "Specification": [
       "Processor: Intel i7",
@@ -117,6 +131,8 @@
     "product_image": "https://i.ibb.co.com/TgS8drN/Convertible-Laptop.jpg",
     "category": "Laptops",
     "price": 899.99,
+    "stock": 15,
+    "sold": 0,
     "description": "2-in-1 laptop that easily converts to a tablet.",
     "Specification": [
       "Processor: AMD Ryzen 5",
@@ -133,6 +149,8 @@
     "product_image": "https://i.ibb.co.com/hLGbmt1/scanrail.jpg",
     "category": "Smart Watches",
     "price": 199.99,
+    "stock": 15,
+    "sold": 0,
     "description": "Smart watch with fitness tracking and notification alerts.",
     "Specification": [
       "Battery Life: 14 days",
@@ -149,6 +167,8 @@
     "product_image": "https://i.ibb.co.com/PFpq2Rx/gt2-Smart-Watch.jpg",
     "category": "Smart Watches",
     "price": 149.99,
+    "stock": 15,
+    "sold": 0,
     "description": "Smart watch focused on fitness tracking.",
     "Specification": [
       "Battery Life: 7 days",
@@ -165,6 +185,8 @@
     "product_image": "https://i.ibb.co.com/jTnKnkm/belt-watch.jpg",
     "category": "Smart Watches",
     "price": 299,
+    "stock": 15,
+    "sold": 0,
     "description": "Stylish smart watch with customizable watch faces.",
     "Specification": [
       "Battery Life: 12 days",
@@ -181,6 +203,8 @@
     "product_image": "https://i.ibb.co.com/10cZmvt/cine-watch.jpg",
     "category": "Smart Watches",
     "price": 99,
+    "stock": 15,
+    "sold": 0,
     "description": "Budget-friendly smart watch with essential features.",
     "Specification": [
       "Battery Life: 5 days",
@@ -197,6 +221,8 @@
     "product_image": "https://i.ibb.co.com/j406TWs/phone.jpg",
     "category": "Phones",
     "price": 499,
+    "stock": 15,
+    "sold": 0,
     "description": "Feature-rich smartphone for everyday use.",
     "Specification": [
       "Screen Size: 6.5 inches",
@@ -213,6 +239,8 @@
     "product_image": "https://i.ibb.co.com/ts9WRkC/apple-iphone-15.webp",
     "category": "Phones",
     "price": 199,
+    "stock": 15,
+    "sold": 0,
     "description": "Affordable smartphone with all the essentials.",
     "Specification": [
       "Screen Size: 6.2 inches",
@@ -229,6 +257,8 @@
     "product_image": "https://i.ibb.co.com/CsCjQqs/vivo-x-fold-3-pro.jpg",
     "category": "Phones",
     "price": 799,
+    "stock": 15,
+    "sold": 0,
     "description": "Smartphone designed for photography enthusiasts.",
     "Specification": [
       "Screen Size: 6.4 inches",

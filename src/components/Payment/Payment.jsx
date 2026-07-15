@@ -27,16 +27,25 @@ const Payment = () => {
         }
 
         // Cart IDs
-        const cartIds = getStoredCartList().map(id => Number(id));
+        const storedCart = getStoredCartList();
 
-        // Find purchased products
-        const purchasedProducts = gadgets.filter(product =>
-            cartIds.includes(Number(product.product_id))
-        );
+        const purchasedProducts = storedCart
+            .map((cartItem) => {
+                const product = gadgets.find(
+                    (item) => item.product_id === cartItem.product_id
+                );
 
-        // Total price
+                if (!product) return null;
+
+                return {
+                    ...product,
+                    quantity: cartItem.quantity,
+                };
+            })
+            .filter(Boolean);
+
         const total = purchasedProducts.reduce(
-            (sum, product) => sum + Number(product.price),
+            (sum, product) => sum + product.price * product.quantity,
             0
         );
 
@@ -44,19 +53,19 @@ const Payment = () => {
         const vat = total * 0.05;
         const grandTotal = total + shipping + vat;
 
-        console.log("Cart IDs:", cartIds);
-        console.log("Purchased Products:", purchasedProducts);
-        console.log("First Product:", purchasedProducts[0]);
-        console.log("Price:", purchasedProducts[0]?.price);
-        console.log("All Gadgets:", gadgets);
-
         // Order Object
         const order = {
             id: Date.now(),
             payment: paymentMethod,
             date: new Date().toLocaleString(),
 
-            items: purchasedProducts.length,
+            items: purchasedProducts.reduce(
+                (sum, item) => sum + item.quantity,
+                0
+            ),
+            
+            productsCount: purchasedProducts.length,
+
             subtotal: total,
             shipping,
             vat,

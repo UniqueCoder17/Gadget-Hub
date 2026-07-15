@@ -27,16 +27,27 @@ const Checkout = () => {
     fetch("/gadgetsData.json")
       .then((res) => res.json())
       .then((data) => {
-        const cartIds = getStoredCartList().map(Number);
+        const storedCart = getStoredCartList();
 
-        const products = data.filter((item) =>
-          cartIds.includes(Number(item.product_id))
-        );
+        const products = storedCart
+          .map((cartItem) => {
+            const product = data.find(
+              (item) => item.product_id === cartItem.product_id
+            );
+
+            if (!product) return null;
+
+            return {
+              ...product,
+              quantity: cartItem.quantity,
+            };
+          })
+          .filter(Boolean);
 
         setCartProducts(products);
 
         const total = products.reduce(
-          (sum, item) => sum + Number(item.price),
+          (sum, item) => sum + item.price * item.quantity,
           0
         );
 
@@ -156,14 +167,34 @@ const Checkout = () => {
                       <p className="text-gray-500">
                         {product.category}
                       </p>
-
+                      {
+                        product.stock === 0 ? (
+                          <p className="text-red-500 font-bold mt-1">
+                            ❌ Out Of Stock
+                          </p>
+                        ) : (
+                          <p className="text-green-600 font-semibold mt-1">
+                            Stock: {product.stock}
+                          </p>
+                        )
+                      }                     
                     </div>
 
                   </div>
 
-                  <h3 className="text-xl font-bold text-purple-600">
-                    ${Number(product.price).toFixed(2)}
-                  </h3>
+                  <div className="text-right space-y-1">
+                    <p className="text-sm text-gray-500">
+                      Qty: <span className="font-bold">{product.quantity}</span>
+                    </p>
+
+                    <p className="text-purple-600 font-bold">
+                      Price: ${Number(product.price).toFixed(2)}
+                    </p>
+
+                    <p className="text-green-600 font-bold">
+                      Total: ${(product.price * product.quantity).toFixed(2)}
+                    </p>
+                  </div>
 
                 </div>
 
@@ -184,8 +215,18 @@ const Checkout = () => {
             <div className="space-y-4">
 
               <div className="flex justify-between">
-                <span>Items</span>
+                <span>Products</span>
                 <span>{cartProducts.length}</span>
+              </div>
+
+              <div className="flex justify-between">
+                <span>Total Quantity</span>
+                <span>
+                  {cartProducts.reduce(
+                    (sum, item) => sum + item.quantity,
+                    0
+                  )}
+                </span>
               </div>
 
               <div className="flex justify-between">

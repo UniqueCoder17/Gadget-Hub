@@ -1,4 +1,3 @@
-// Get All Orders
 const getStoredOrders = () => {
     const storedOrders = localStorage.getItem("orders");
 

@@ -16,11 +16,12 @@ const GadgetDetail = () => {
 
     const [isWished, setIsWished] = useState(false);
     const [cartCount, setCartCount] = useState(0);
+    const [quantity, setQuantity] = useState(1);
 
     const handleCart = (id) => {
-        addTOStoredCartList(id);
-        setCartCount(cartCount + 1);
-        toast.success(`${product_title} added to Cart`);
+        addTOStoredCartList(id, quantity);
+        setCartCount(cartCount + quantity);
+        toast.success(`${quantity} × ${product_title} added to Cart`);
     }
 
     const handleWish = (id) => {
@@ -48,7 +49,45 @@ const GadgetDetail = () => {
                         <div className='space-y-2 mt-4 lg:mt-0'>
                             <h1 className='text-2xl lg:text-4xl font-bold'>{product_title}</h1>
                             <p className='text-sm lg:text-lg font-bold'>Price: ${price}</p>
-                            <button className="btn btn-outline text-[#2f9c08e8] rounded-3xl">In Stock</button>
+                            <div className="flex items-center gap-4 mt-4">
+
+                                <span className="font-bold">Quantity</span>
+
+                                <button
+                                    className="btn btn-circle btn-outline"
+                                    onClick={() => setQuantity(Math.max(1, quantity - 1))}
+                                >
+                                    -
+                                </button>
+
+                                <span className="text-xl font-bold">
+                                    {quantity}
+                                </span>
+
+                                <button
+                                    className="btn btn-circle btn-outline"
+                                    onClick={() => {
+                                        if (quantity >= gadget.stock) {
+                                            toast.warning("Maximum Stock Reached");
+                                            return;
+                                        }
+                                        setQuantity(quantity + 1);
+                                    }}
+                                >
+                                    +
+                                </button>
+
+                            </div>
+                            <button
+                                className={`btn rounded-3xl ${gadget.stock > 0
+                                    ? "btn-outline text-green-600"
+                                    : "btn-error text-white"
+                                    }`}
+                            >
+                                {gadget.stock > 0
+                                    ? `In Stock (${gadget.stock})`
+                                    : "Out Of Stock"}
+                            </button>
                             <p>{description}</p>
                             <p className='font-bold'>Specification:</p>
                             <ol className='space-y-1'>
@@ -70,7 +109,9 @@ const GadgetDetail = () => {
                                 </div>
                             </div>
                             <div className='flex'>
-                                <button onClick={() => handleCart(product_id)} className='flex mr-4 text-white bg-[#9538E2] py-1 px-2 rounded-2xl font-bold'>Add To Cart <TiShoppingCart className="w-8 h-6 text-white" /></button>
+                                <button
+                                    onClick={() => handleCart(id)}
+                                    disabled={gadget.stock === 0} className='flex mr-4 text-white bg-[#9538E2] py-1 px-2 rounded-2xl font-bold'>Add To Cart <TiShoppingCart className="w-8 h-6 text-white" /></button>
                                 <button onClick={() => handleWish(product_id)} disabled={isWished}>
                                     {isWished ? <FaHeart className="w-6 h-6 text-red-600 ml-1" /> : <FaRegHeart className="w-6 h-6 text-gray-600 ml-1" />}
                                 </button>
