@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Gadget from '../Gadget/Gadget';
+import { getStoredProducts, saveProducts } from "../../utility/productDb";
+
 
 const Gadgets = () => {
     const [gadgets, setGadgets] = useState([]);
@@ -7,12 +9,21 @@ const Gadgets = () => {
     const [selectedCategory, setSelectedCategory] = useState('All Product');
 
     useEffect(() => {
-        fetch('./gadgetsData.json')
-            .then(res => res.json())
-            .then(data => {
-                setGadgets(data);
-                setFilteredGadgets(data);
-            });
+        const storedProducts = getStoredProducts();
+
+        if (storedProducts.length > 0) {
+            setGadgets(storedProducts);
+            setFilteredGadgets(storedProducts);
+        } else {
+            fetch("./gadgetsData.json")
+                .then((res) => res.json())
+                .then((data) => {
+                    saveProducts(data);
+
+                    setGadgets(data);
+                    setFilteredGadgets(data);
+                });
+        }
     }, []);
 
     const handleFilter = (category) => {

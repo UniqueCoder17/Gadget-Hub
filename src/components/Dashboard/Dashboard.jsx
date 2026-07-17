@@ -4,6 +4,8 @@ import { useLoaderData, useNavigate } from "react-router-dom";
 import { TiDeleteOutline } from "react-icons/ti";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { getStoredProducts, saveProducts } from "../../utility/productDb";
+
 
 import {
     getStoredCartList,
@@ -19,7 +21,22 @@ import {
 
 const Dashboard = () => {
 
-    const allGadgets = useLoaderData();
+    const [allGadgets, setAllGadgets] = useState([]);
+
+    useEffect(() => {
+        const storedProducts = getStoredProducts();
+
+        if (storedProducts.length > 0) {
+            setAllGadgets(storedProducts);
+        } else {
+            fetch("/gadgetsData.json")
+                .then(res => res.json())
+                .then(data => {
+                    saveProducts(data);
+                    setAllGadgets(data);
+                });
+        }
+    }, []);
     const navigate = useNavigate();
 
     const [cartList, setCartList] = useState([]);

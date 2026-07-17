@@ -5,13 +5,22 @@ import { FaRegHeart, FaHeart } from "react-icons/fa";
 import { addTOStoredCartList, addTOStoredWishList } from '../../utility/addToDb';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { getStoredProducts } from "../../utility/productDb";
+
 
 const GadgetDetail = () => {
     const { product_id } = useParams();
     const id = parseInt(product_id);
-    const data = useLoaderData();
+    const storedProducts = getStoredProducts();
 
-    const gadget = data.find(gadget => gadget.product_id === id);
+    const data =
+        storedProducts.length > 0
+            ? storedProducts
+            : useLoaderData();
+
+    const gadget = data.find(
+        (gadget) => gadget.product_id === id
+    );
     const { product_image, product_title, price, description, Specification, rating } = gadget;
 
     const [isWished, setIsWished] = useState(false);

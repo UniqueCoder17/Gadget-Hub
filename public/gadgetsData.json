@@ -41,7 +41,7 @@
     "product_image": "https://i.ibb.co.com/FYmbmyv/Smartphone.jpg",
     "category": "Phones",
     "price": 299.99,
-    "stock": 15,
+    "stock": 25,
     "sold": 0,
     "description": "Latest model smartphone with a stunning display.",
     "Specification": [
@@ -268,5 +268,23 @@
     "availability": true,
     "rating": 4.7,
     "brand": "Vivo"
+  },
+  {
+    "product_id": 16,
+    "product_title": "iPhone 17 Pro",
+    "product_image": "https://i.ibb.co.com/5gB6j2Np/iphone-17-pro-deep-blue238.jpg",
+    "category": "Phones",
+    "price": 1699,
+    "stock": 15,
+    "sold": 0,
+    "description": "Display Size: 6.3‑inch (diagonal), Super Retina XDR display.",
+    "Specification": [
+      "Screen Size: 6.3 inches",
+      "Camera: 120MP + 64MP",
+      "Storage: 256GB"
+    ],
+    "availability": true,
+    "rating": 4.9,
+    "brand": "Apple"
   }
 ]

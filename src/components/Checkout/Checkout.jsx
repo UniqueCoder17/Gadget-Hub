@@ -76,7 +76,15 @@ const Checkout = () => {
 
           {/* Shipping */}
 
-          <div className="lg:col-span-2 bg-white rounded-2xl shadow-xl p-8">
+          <div className="lg:col-span-2 bg-gradient-to-b from-[#9b56d4] to-blue-300 text-black rounded-2xl shadow-xl p-8">
+
+            <h1 className="text-3xl font-bold text-center mb-2">
+              Checkout Form
+            </h1>
+
+            <p className="text-center text-white/80 mb-8">
+              Please fill in your shipping details
+            </p>
 
             <h2 className="text-2xl font-bold mb-6">
               Shipping Information
@@ -177,7 +185,7 @@ const Checkout = () => {
                             Stock: {product.stock}
                           </p>
                         )
-                      }                     
+                      }
                     </div>
 
                   </div>
@@ -206,7 +214,7 @@ const Checkout = () => {
 
           {/* Order Summary */}
 
-          <div className="bg-white rounded-2xl shadow-xl p-8 h-fit sticky top-24">
+          <div className="bg-gradient-to-b from-[#9b56d4] to-blue-300 rounded-2xl shadow-xl p-8 h-fit sticky top-24">
 
             <h2 className="text-2xl font-bold mb-6">
               Order Summary

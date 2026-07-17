@@ -1,11 +1,21 @@
 import React, { useEffect, useState } from "react";
 import { Helmet } from "react-helmet";
+import bkash from "../../assets/bkash.jpg";
+import nagad from "../../assets/nagad.webp";
+import rocket from "../../assets/rocket.png";
 import { useNavigate } from "react-router-dom";
 import { saveOrder } from "../../utility/orderDb";
 import {
     getStoredCartList,
     clearStoredCartList,
 } from "../../utility/addToDb";
+import logo from "../../assets/favicon-16x16.png";
+import {
+    getStoredProducts,
+    saveProducts,
+} from "../../utility/productDb";
+
+
 
 const Payment = () => {
     const navigate = useNavigate();
@@ -15,9 +25,18 @@ const Payment = () => {
 
     // Load products
     useEffect(() => {
-        fetch("/gadgetsData.json")
-            .then((res) => res.json())
-            .then((data) => setGadgets(data));
+        const storedProducts = getStoredProducts();
+
+        if (storedProducts.length > 0) {
+            setGadgets(storedProducts);
+        } else {
+            fetch("/gadgetsData.json")
+                .then((res) => res.json())
+                .then((data) => {
+                    saveProducts(data);
+                    setGadgets(data);
+                });
+        }
     }, []);
 
     const handlePayment = () => {
@@ -63,7 +82,7 @@ const Payment = () => {
                 (sum, item) => sum + item.quantity,
                 0
             ),
-            
+
             productsCount: purchasedProducts.length,
 
             subtotal: total,
@@ -73,6 +92,32 @@ const Payment = () => {
 
             products: purchasedProducts,
         };
+
+        const products = getStoredProducts();
+
+        const updatedProducts = products.map((item) => {
+            const boughtProduct = purchasedProducts.find(
+                (p) => p.product_id === item.product_id
+            );
+
+            if (boughtProduct) {
+                return {
+                    ...item,
+                    stock: Math.max(0, item.stock - boughtProduct.quantity),
+                };
+            }
+
+            return item;
+        });
+
+        console.log("Before Update:", products);
+        console.log("Purchased:", purchasedProducts);
+        console.log("After Update:", updatedProducts);
+
+        saveProducts(updatedProducts);
+
+        // State Update
+        setGadgets(updatedProducts);
 
         // Save Order
         saveOrder(order);
@@ -84,73 +129,269 @@ const Payment = () => {
     };
 
     return (
-        <div className="min-h-screen bg-gray-100 py-12">
+        <div className="min-h-screen bg-gradient-to-br from-slate-100 via-white to-slate-200 py-16">
             <Helmet>
                 <title>Payment | Gadget Heaven</title>
             </Helmet>
 
-            <div className="max-w-5xl mx-auto">
-                <div className="bg-white rounded-3xl shadow-xl p-10">
-                    <h1 className="text-4xl font-bold text-center mb-10">
-                        Payment Method
-                    </h1>
+            <div className="max-w-6xl mx-auto px-5">
 
-                    <div className="space-y-5">
+                <div className="mb-8 border-b pb-6">
+                    <div className="flex items-center gap-3">
+                        <img
+                            src={logo}
+                            alt="Gadget Heaven Logo"
+                            className="w-6 h-6 rounded-xl object-cover"
+                        />
 
-                        <label className="flex items-center justify-between border rounded-xl p-5 cursor-pointer hover:border-purple-600">
-                            <span>💳 Credit / Debit Card</span>
-                            <input
-                                type="radio"
-                                name="payment"
-                                onChange={() => setPaymentMethod("Card")}
-                            />
-                        </label>
+                        <h1 className="text-3xl font-bold text-gray-800">
+                            Gadget Heaven
+                        </h1>
+                    </div>
 
-                        <label className="flex items-center justify-between border rounded-xl p-5 cursor-pointer hover:border-purple-600">
-                            <span>🟣 bKash</span>
-                            <input
-                                type="radio"
-                                name="payment"
-                                onChange={() => setPaymentMethod("bKash")}
-                            />
-                        </label>
+                    <p className="text-gray-500 mt-2">
+                        <p className="text-gray-500 ml-12 mt-1">
+                            Fast • Secure • Trusted Checkout Experience
+                        </p>
+                    </p>
+                </div>
 
-                        <label className="flex items-center justify-between border rounded-xl p-5 cursor-pointer hover:border-purple-600">
-                            <span>🟠 Nagad</span>
-                            <input
-                                type="radio"
-                                name="payment"
-                                onChange={() => setPaymentMethod("Nagad")}
-                            />
-                        </label>
+                <div className="grid lg:grid-cols-3 gap-10">
 
-                        <label className="flex items-center justify-between border rounded-xl p-5 cursor-pointer hover:border-purple-600">
-                            <span>🔵 Rocket</span>
-                            <input
-                                type="radio"
-                                name="payment"
-                                onChange={() => setPaymentMethod("Rocket")}
-                            />
-                        </label>
+                    {/* Payment Methods */}
 
-                        <label className="flex items-center justify-between border rounded-xl p-5 cursor-pointer hover:border-purple-600">
-                            <span>💵 Cash On Delivery</span>
-                            <input
-                                type="radio"
-                                name="payment"
-                                onChange={() => setPaymentMethod("COD")}
-                            />
-                        </label>
+                    <div className="lg:col-span-2 bg-gradient-to-b from-[#b776ec] to-blue-300 rounded-3xl shadow-2xl p-8">
+
+                        <h2 className="text-2xl font-bold mb-8">
+                            Payment Methods
+                        </h2>
+
+                        <div className="space-y-5">
+
+                            {/* Card */}
+
+                            <label className={`flex justify-between items-center border-2 rounded-2xl p-5 cursor-pointer transition duration-300 hover:border-purple-600 ${paymentMethod === "Card"
+                                ? "border-purple-700 bg-purple-50"
+                                : "border-gray-200"
+                                }`}>
+
+                                <div className="flex items-center gap-5">
+                                    <div className="w-14 h-14 rounded-xl bg-blue-100 flex items-center justify-center text-3xl">
+                                        💳
+                                    </div>
+
+                                    <div>
+                                        <h3 className="font-bold text-lg">
+                                            Credit / Debit Card
+                                        </h3>
+
+                                        <p className="text-black text-sm">
+                                            Visa • Mastercard • American Express
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <input
+                                    type="radio"
+                                    name="payment"
+                                    checked={paymentMethod === "Card"}
+                                    onChange={() => setPaymentMethod("Card")}
+                                />
+
+                            </label>
+
+                            {/* bKash */}
+
+                            <label className={`flex justify-between items-center border-2 rounded-2xl p-5 cursor-pointer transition duration-300 hover:border-pink-500 ${paymentMethod === "bKash"
+                                ? "border-pink-500 bg-pink-50"
+                                : "border-gray-200"
+                                }`}>
+
+                                <div className="flex items-center gap-5">
+
+                                    <img
+                                        src={bkash}
+                                        className="w-14 h-14 rounded-xl object-cover"
+                                        alt=""
+                                    />
+
+                                    <div>
+                                        <h3 className="font-bold text-lg">
+                                            bKash
+                                        </h3>
+
+                                        <p className="text-black text-sm">
+                                            Fast Mobile Banking
+                                        </p>
+                                    </div>
+
+                                </div>
+
+                                <input
+                                    type="radio"
+                                    name="payment"
+                                    checked={paymentMethod === "bKash"}
+                                    onChange={() => setPaymentMethod("bKash")}
+                                />
+
+                            </label>
+
+                            {/* Nagad */}
+
+                            <label className={`flex justify-between items-center border-2 rounded-2xl p-5 cursor-pointer transition duration-300 hover:border-orange-500 ${paymentMethod === "Nagad"
+                                ? "border-orange-500 bg-orange-50"
+                                : "border-gray-200"
+                                }`}>
+
+                                <div className="flex items-center gap-5">
+
+                                    <img
+                                        src={nagad}
+                                        className="w-14 h-14 rounded-xl object-cover"
+                                        alt=""
+                                    />
+
+                                    <div>
+                                        <h3 className="font-bold text-lg">
+                                            Nagad
+                                        </h3>
+
+                                        <p className="text-black text-sm">
+                                            Digital Payment
+                                        </p>
+                                    </div>
+
+                                </div>
+
+                                <input
+                                    type="radio"
+                                    name="payment"
+                                    checked={paymentMethod === "Nagad"}
+                                    onChange={() => setPaymentMethod("Nagad")}
+                                />
+
+                            </label>
+
+                            {/* Rocket */}
+
+                            <label className={`flex justify-between items-center border-2 rounded-2xl p-5 cursor-pointer transition duration-300 hover:border-purple-700 ${paymentMethod === "Rocket"
+                                ? "border-purple-700 bg-purple-50"
+                                : "border-gray-200"
+                                }`}>
+
+                                <div className="flex items-center gap-5">
+
+                                    <img
+                                        src={rocket}
+                                        className="w-14 h-14 rounded-xl object-cover"
+                                        alt=""
+                                    />
+
+                                    <div>
+                                        <h3 className="font-bold text-lg">
+                                            Rocket
+                                        </h3>
+
+                                        <p className="text-black text-sm">
+                                            Dutch Bangla Mobile Banking
+                                        </p>
+                                    </div>
+
+                                </div>
+
+                                <input
+                                    type="radio"
+                                    name="payment"
+                                    checked={paymentMethod === "Rocket"}
+                                    onChange={() => setPaymentMethod("Rocket")}
+                                />
+
+                            </label>
+
+                            {/* COD */}
+
+                            <label className={`flex justify-between items-center border-2 rounded-2xl p-5 cursor-pointer transition duration-300 hover:border-green-600 ${paymentMethod === "COD"
+                                ? "border-green-600 bg-green-50"
+                                : "border-gray-200"
+                                }`}>
+
+                                <div className="flex items-center gap-5">
+
+                                    <div className="w-14 h-14 rounded-xl bg-green-100 flex items-center justify-center text-3xl">
+                                        💵
+                                    </div>
+
+                                    <div>
+                                        <h3 className="font-bold text-lg">
+                                            Cash On Delivery
+                                        </h3>
+
+                                        <p className="text-black text-sm">
+                                            Pay after receiving your order
+                                        </p>
+                                    </div>
+
+                                </div>
+
+                                <input
+                                    type="radio"
+                                    name="payment"
+                                    checked={paymentMethod === "COD"}
+                                    onChange={() => setPaymentMethod("COD")}
+                                />
+
+                            </label>
+
+                        </div>
 
                     </div>
-                    <button
-                        onClick={handlePayment}
-                        className="btn btn-primary w-full mt-10"
-                    >
-                        Confirm Payment
-                    </button>
+
+                    {/* Summary */}
+
+                    <div className="bg-gradient-to-b from-[#bb75f5] to-blue-300 rounded-3xl shadow-2xl p-8 h-fit sticky top-24">
+
+                        <h2 className="text-2xl font-bold mb-6">
+                            Order Summary
+                        </h2>
+
+                        <div className="space-y-4">
+
+                            <div className="flex justify-between">
+                                <span>Products</span>
+                                <span>{getStoredCartList().length}</span>
+                            </div>
+
+                            <div className="flex justify-between">
+                                <span>Shipping</span>
+                                <span>$20</span>
+                            </div>
+
+                            <div className="flex justify-between">
+                                <span>VAT</span>
+                                <span>5%</span>
+                            </div>
+
+                            <hr />
+
+                            <p className="text-white font-semibold">
+                                🔒 Secure SSL Encrypted Payment
+                            </p>
+
+                        </div>
+
+                        <button
+                            onClick={handlePayment}
+                            className="w-full mt-8 py-4 rounded-2xl bg-purple-600 hover:bg-purple-800 text-white font-bold text-lg transition duration-300"
+                        >
+                            Confirm Payment
+                        </button>
+
+                    </div>
+
                 </div>
+
             </div>
+
         </div>
     );
 };

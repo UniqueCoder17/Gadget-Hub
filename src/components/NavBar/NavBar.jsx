@@ -4,6 +4,8 @@ import { FaRegHeart } from "react-icons/fa";
 import { useEffect, useState } from "react";
 import { auth } from "../firebase/firebase.int";
 import { signOut, onAuthStateChanged } from "firebase/auth";
+import logo from "../../assets/favicon-16x16.png";
+
 
 const NavBar = () => {
     const location = useLocation();
@@ -66,7 +68,7 @@ const NavBar = () => {
                         <li>
                             <NavLink to="/about">About Us</NavLink>
                         </li>
-                        
+
                         <li>
                             <NavLink to="/orders">
                                 Orders
@@ -95,7 +97,23 @@ const NavBar = () => {
                     </ul>
                 </div>
 
-                <h1 className="text-xl font-bold">Gadget Heaven</h1>
+                <div className="flex items-center gap-3">
+                    <img
+                        src={logo}
+                        alt="Gadget Heaven"
+                        className="w-8 h-8 rounded-xl shadow-md"
+                    />
+
+                    <div>
+                        <h1 className="text-xl font-bold">
+                            Gadget Heaven
+                        </h1>
+
+                        <p className="text-xs opacity-70">
+                            Premium Gadget Store
+                        </p>
+                    </div>
+                </div>
             </div>
 
             {/* Center */}

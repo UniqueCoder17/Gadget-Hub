@@ -75,7 +75,10 @@ const Success = () => {
             <span className="font-bold">Total Quantity :</span>{" "}
             {lastOrder?.items}
           </p>
-
+          <p>
+            <span className="font-bold">Grand Total :</span>{" "}
+            ${lastOrder?.total?.toFixed(2)}
+          </p>
           <div className="mt-6 text-left">
 
             <h2 className="text-xl font-bold text-[#9538E2] mb-4">
@@ -108,10 +111,7 @@ const Success = () => {
                       <p className="text-sm text-gray-500">
                         Qty : {Number(product.quantity)}
                       </p>
-                      <p>
-                        <span className="font-bold">Grand Total :</span>{" "}
-                        ${lastOrder?.total?.toFixed(2)}
-                      </p>
+
                     </div>
 
                   </div>

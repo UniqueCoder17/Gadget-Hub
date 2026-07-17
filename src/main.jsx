@@ -62,7 +62,6 @@ const router = createBrowserRouter([
             <Dashboard />
           </ProtectedRoute>
         ),
-        loader: () => fetch("/gadgetsData.json"),
       },
       {
         path: "statistics",
@@ -117,7 +116,6 @@ const router = createBrowserRouter([
             <GadgetDetail />
           </ProtectedRoute>
         ),
-        loader: () => fetch("/gadgetsData.json"),
       },
     ],
   },
