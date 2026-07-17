@@ -103,7 +103,17 @@ const Payment = () => {
             if (boughtProduct) {
                 return {
                     ...item,
-                    stock: Math.max(0, item.stock - boughtProduct.quantity),
+
+                    // Stock কমবে
+                    stock: Math.max(
+                        0,
+                        Number(item.stock) - boughtProduct.quantity
+                    ),
+
+                    // Sold বাড়বে
+                    sold:
+                        Number(item.sold || 0) +
+                        boughtProduct.quantity,
                 };
             }
 

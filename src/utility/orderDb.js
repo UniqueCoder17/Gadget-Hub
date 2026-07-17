@@ -38,3 +38,5 @@ export {
     deleteOrder,
     clearOrders,
 };
+
+export const getOrders = getStoredOrders;
